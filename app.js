@@ -24,7 +24,9 @@ router.get('/location', verificaTk, (req, res) => {
     tiempo.getLatLong().then((result) => {
         res.json(result);
 
-    })  
+    }).catch((err)=> {
+        res.status(500).json(err);
+    })
         
 });
 
@@ -67,7 +69,5 @@ module.exports = {
 }
 
 app.listen(process.env.PORT, () => {
-
     console.log('Escuchando peticiones en puerto : ', process.env.PORT);
-    
 });

@@ -31,17 +31,15 @@ const getLatLong = async (city) => {
             });
         
     }
+    // de una manera u otra ya tenemos la city para poder obtener el estado del tiempo. ahora obtenemos la lat y long.
     const optionCity = {
         url : encodeURI(`https://nominatim.openstreetmap.org/search/${ciudad}?format=json&addressdetails=1&limit=1&polygon_svg=1`)
     }
     //console.log(optionCity);   
     await axios.request(optionCity).then(function (response) {
         retorno =  {lat : response.data[0].lat, lon : response.data[0].lon, city : ciudad, metodo : !city ? 'Por IP' : 'Por ciudad'};
-    }).catch(function (error) {
-
-        console.log(error.response);
-
-        retorno =  {lat : -1, lon : -1, city : ciudad, metodo : !city ? 'Por IP' : 'Por ciudad'};
+    }).catch((err) => {
+        throw new Error("Error al llamar el servicio para localizar la Ciudad (latitud, longitud)");
     });
     return retorno ;
 }
